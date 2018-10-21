@@ -1,7 +1,7 @@
 import numpy
 import pickle as p
 import datetime, time
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
 from keras.datasets import mnist
 from keras.models import Sequential

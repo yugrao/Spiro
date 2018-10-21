@@ -4,3 +4,5 @@ pandas==0.20.3
 sklearn
 tensorflow==1.2.1
 keras==2.1.5
+flask
+pickle
