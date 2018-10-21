@@ -1,4 +1,6 @@
-# boilermake-parkinsons
+# Spiro
+
+Devpost:https://devpost.com/software/spiro
 
 ## Major platforms Used
 - Python
@@ -23,7 +25,7 @@
   - 128 dense
   - sigmoid activation
   - 20 batch size
-  - 50 epochs
+  - 100 epochs
 
 
 ## Future Improvements
