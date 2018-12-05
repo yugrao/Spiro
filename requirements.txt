@@ -5,3 +5,4 @@ sklearn
 tensorflow
 keras==2.1.5
 pyrebase
+flask

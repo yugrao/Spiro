@@ -58,6 +58,9 @@ def add_data():
     data.append(new_data)
     return jsonify({'data': new_data}), 201
 
+@app.route('/')
+def index():
+    return "Hey rasvik!"
 
 if __name__ == '__main__':
     app.run(debug=True)
