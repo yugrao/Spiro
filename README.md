@@ -4,6 +4,7 @@ Devpost:https://devpost.com/software/spiro
 
 ## Major platforms Used
 - Python
+  - Flask
   - Keras
   - Pandas
   - Numpy
