@@ -24,7 +24,7 @@ def get_spiro_data():
 
 @app.route('/spiro/data/<int:data_id>', methods=['GET'])
 def get_spiro_data2(data_id):
-    d = [d for d in data if data['id'] == int(data_id)]
+    d = [d for d in data if d['id'] == int(data_id)]
     if len(d) == 0:
         abort(404)
     return jsonify({'data': d[0]})
@@ -58,6 +58,9 @@ def add_data():
     data.append(new_data)
     return jsonify({'data': new_data}), 201
 
+@app.route('/')
+def index():
+    return "Hey rasvik!"
 
 if __name__ == '__main__':
     app.run(debug=True)
