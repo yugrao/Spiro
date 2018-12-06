@@ -2,6 +2,23 @@
 from flask import Flask, jsonify
 from flask import abort
 from flask import request
+from keras.datasets import mnist
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.layers import Dropout
+from keras.layers import Flatten
+from keras.layers.convolutional import Conv2D
+from keras.layers.convolutional import MaxPooling2D
+from keras.utils import np_utils
+from keras import backend as K
+from keras.models import load_model
+import random as r
+import pickle as p
+import numpy as np
+from PIL import Image
+import logging
+import json
+import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 
@@ -30,10 +47,10 @@ def get_spiro_data2(data_id):
     return jsonify({'data': d[0]})
 
 def predict_data(a):
-    model = load_model('Spiral_Model-84.38-1020053228.h5')
+    model = load_model('Spiral_Model-96.88-1021094522.h5')
     x, y = np.array(a).T
-    x = list(map(lambda x:(x-480)*2/3, x))
-    y = list(map(lambda y:(y-480)*2/3, y))
+    x = list(map(lambda x_i:(x_i-480)*2/3, x))
+    y = list(map(lambda y_i:(y_i-480)*2/3, y))
     plt.plot(x, y, "ko-", linewidth=5, markersize=0)
     plt.axis([-300, 300, 300, -300])
     plt.axis("off")
@@ -42,22 +59,25 @@ def predict_data(a):
     fig.savefig("thisisarequestimg.png", dpi=25)
     plt.clf()
     img_a = np.asarray(Image.open("thisisarequestimg.png"))
-    img_a = [[list(map(lambda rgbx: (rgbx[0] * 299.0/1000 + rgbx[1] * 587.0/1000 + rgbx[2] * 114.0/1000)/255, row)) for row in a]]
-    img_a = np.array(img_a)
-    return model.predict(np.array(img_a))
+    img_a = [list(map(lambda rgbx: (rgbx[0] * 299.0/1000 + rgbx[1] * 587.0/1000 + rgbx[2] * 114.0/1000)/255, row)) for row in img_a]
+    logging.warning(np.array([np.array(img_a)]).shape)
+    logging.warning(np.array([np.array([np.array(img_a)])]).shape)
+    return model.predict(np.array([np.array([np.array(img_a)])]))
 
 @app.route('/spiro/data', methods=['POST'])
 def add_data():
-    print(request.json)
-    if not request.json or not 'data' in request.json:
+    if not request.form:
         abort(400)
+    pt_list = [[float(coord.strip("( )")) for coord in pt.split(",")] for pt in request.form.getlist("data[]")]
     new_data = {
         'id': data[-1]['id'] + 1,
-        'data': [list(point) for point in request.json['data']]
+        'data': pt_list
     }
-    new_data['output'] = predict_data(new_data['data'])
+    logging.warning(new_data['data'])
+    prediction = predict_data(new_data['data'])
+    new_data['output'] = prediction
     data.append(new_data)
-    return jsonify({'data': new_data}), 201
+    return str(prediction), 201
 
 @app.route('/')
 def index():
