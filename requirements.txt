@@ -7,6 +7,9 @@ keras==2.1.5
 pyrebase
 flask
 <<<<<<< HEAD
+<<<<<<< HEAD
 gunicorn
+=======
+>>>>>>> 08d96bcc2086c78744f73933e8f919796c1582ac
 =======
 >>>>>>> 08d96bcc2086c78744f73933e8f919796c1582ac
