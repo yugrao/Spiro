@@ -77,7 +77,7 @@ def add_data():
     prediction = predict_data(new_data['data'])
     new_data['output'] = prediction
     data.append(new_data)
-    return str(prediction), 201
+    return str(data), 201 #added prediction[0][0]
 
 @app.route('/')
 def index():
